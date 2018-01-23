@@ -1,0 +1,20 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<head>
+<title></title>
+</head>
+
+<body>
+
+<form action="upload.php" method="post" enctype="multipart/form-data">
+<label for="file"><span>Filename:</span></label>
+<input type="file" name="file" id="file" /> 
+<br />
+<input type="submit" name="submit" value="Submit" />
+</form>
+
+</body>
+</html>
