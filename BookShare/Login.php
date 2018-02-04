@@ -20,7 +20,7 @@
 
     <div class="container">
 
-        <form class="form-signin" action="sms.php" method="get" enctype="multipart/form-data">
+        <form class="form-signin" action="sms.php" method="post" enctype="multipart/form-data">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Phone Number</label>
         <input id="inputEmail" name="number" class="form-control" placeholder="Phone Number" required autofocus>

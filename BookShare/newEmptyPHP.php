@@ -1,34 +1,109 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!DOCTYPE HTML>
 <?php
 session_start();
 include 'Database.php';
 ?>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
-
-    <title>BookShare- Online Library and Book rent</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Login Modal Dialog Window with CSS and jQuery</title>
+<link href="CSS/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="CSS/carousel.css" rel="stylesheet">
-    <link href="CSS/formStyle.css" rel="stylesheet">
-  </head>
-  <body>
 
-    <main role="main">
+<style type="text/css">
+
+
+a { 
+	text-decoration:none; 
+	color:#00c6ff;
+}
+
+.container {width: 960px; margin: 0 auto; overflow: hidden;}
+
+#content {	float: left; width: 100%;}
+
+.post { margin: 0 auto; padding-bottom: 50px; float: left; width: 960px; }
+
+
+#mask {
+	display: none;
+	background: #000; 
+	position: fixed; left: 0; top: 0; 
+	z-index: 10;
+	width: 100%; height: 100%;
+	opacity: 0.8;
+	z-index: 999;
+}
+
+.login-popup{
+	display:none;
+	background: #333;
+	padding: 10px; 	
+	border: 2px solid #ddd;
+	float: left;
+	font-size: 1.2em;
+	position: fixed;
+	top: 50%; left: 50%;
+	z-index: 99999;
+	box-shadow: 0px 0px 20px #999;
+	-moz-box-shadow: 0px 0px 20px #999; /* Firefox */
+    -webkit-box-shadow: 0px 0px 20px #999; /* Safari, Chrome */
+	border-radius:3px 3px 3px 3px;
+    -moz-border-radius: 3px; /* Firefox */
+    -webkit-border-radius: 3px; /* Safari, Chrome */
+}
+
+img.btn_close {
+	float: right; 
+	margin: -28px -28px 0 0;
+}
+
+fieldset { 
+	border:none; 
+}
+
+form.signin .textbox label { 
+	display:block; 
+	padding-bottom:7px; 
+}
+
+form.signin .textbox span { 
+	display:block;
+}
+
+form.signin p, form.signin span { 
+	color:#999; 
+	font-size:11px; 
+	line-height:18px;
+} 
+
+form.signin .textbox input { 
+	background:#666666; 
+	border-bottom:1px solid #333;
+	border-left:1px solid #000;
+	border-right:1px solid #333;
+	border-top:1px solid #000;
+	color:#fff; 
+	border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	font:20px Arial, Helvetica, sans-serif;
+	padding:6px 6px 4px;
+	width:750px;
+}
+
+form.signin input:-moz-placeholder { color:#bbb; text-shadow:0 0 2px #000; }
+form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #000;  }
+
+
+
+</style>
+<link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
+</head>
+<body>
+ <main role="main">
 	
 	<!--header added-->
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -57,40 +132,17 @@ include 'Database.php';
           <li class="nav-item">
             <a class="nav-link" href="#">Request</a>
           </li>
-          <?php
-            if(isset($_SESSION["Name"]))
-            {    
-          ?>
-          <li class="nav-item active">
-              <a class="nav-link" href="destroy"><?php echo $_SESSION["Name"]?></a>
-          </li>
-          
-          <?php
-            }
-          else
-          {
-           ?>
-          <li class="nav-item active">
-              <a class="nav-link" href="Login">Login</a>
-          </li>
-          <?php
-          }
-          ?>
-          <!--<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>-->
         </ul>
           <div class="btn-sign">
               <a href="#login-box" class="login-window"><img src="search-icon-png-27.png" height="30" width="30" alt="Search" title="Search"></a>
         	</div>
-      </div>
+           </div>
     </nav>
-	<!--Search form-------------->
+	<!---------------->
+
+     
+    </main>   
+        
         <div id="login-box" class="login-popup">
         <a href="#" class="close"><img src="close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
           <form method="post" class="signin" action="#">
@@ -102,8 +154,8 @@ include 'Database.php';
                 </fieldset>
           </form>
 		</div>
-	<!--Search form-------------->
-      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
           <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -172,12 +224,7 @@ include 'Database.php';
           <span class="sr-only">Next</span>
         </a>
       </div>
-
-
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->     
-	<div class="container marketing">
+<div class="container marketing">
         <!-- Example row of columns -->
         <div class="row">
        <?php
@@ -207,14 +254,6 @@ include 'Database.php';
 ?>        
 	</div>
 </div>
-      <!-- FOOTER -->
-      <footer class="container">
-        <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-      </footer>
-    </main>
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -224,25 +263,7 @@ include 'Database.php';
     <script src="JS/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="JS/holder.min.js"></script>
-    <script>
-function showHint(str) {
-    if (str.length == 0) { 
-        document.getElementById("livesearch").innerHTML = "";
-        return;
-    } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("livesearch").innerHTML = this.responseText;
-                document.getElementById("livesearch").style.border="1px solid #A5ACB2";
-            }
-        };
-        xmlhttp.open("GET", "gethint.php?q=" + str, true);
-        xmlhttp.send();
-    }
-}
-</script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('a.login-window').click(function() {
@@ -278,6 +299,5 @@ $(document).ready(function() {
 	});
 });
 </script>
-  </body>
+</body>
 </html>
-

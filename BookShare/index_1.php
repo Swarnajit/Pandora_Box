@@ -24,7 +24,7 @@ include 'Database.php';
 
     <!-- Custom styles for this template -->
     <link href="CSS/carousel.css" rel="stylesheet">
-    <link href="CSS/formStyle.css" rel="stylesheet">
+
   </head>
   <body>
 
@@ -85,24 +85,11 @@ include 'Database.php';
             </div>
           </li>-->
         </ul>
-          <div class="btn-sign">
-              <a href="#login-box" class="login-window"><img src="search-icon-png-27.png" height="30" width="30" alt="Search" title="Search"></a>
-        	</div>
+          <a href="searchPage.php"><img src="search-icon-png-27.png" height="30" width="30"></a>
       </div>
     </nav>
-	<!--Search form-------------->
-        <div id="login-box" class="login-popup">
-        <a href="#" class="close"><img src="close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
-          <form method="post" class="signin" action="#">
-                <fieldset class="textbox">
-            	<label class="username">
-                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="Search your book in our library">
-                </label>
-                
-                </fieldset>
-          </form>
-		</div>
-	<!--Search form-------------->
+	<!---------------->
+
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -241,42 +228,6 @@ function showHint(str) {
         xmlhttp.send();
     }
 }
-</script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('a.login-window').click(function() {
-		
-		// Getting the variable's value from a link 
-		var loginBox = $(this).attr('href');
-
-		//Fade in the Popup and add close button
-		$(loginBox).fadeIn(300);
-		
-		//Set the center alignment padding + border
-		var popMargTop = ($(loginBox).height() + 24) / 2; 
-		var popMargLeft = ($(loginBox).width() + 24) / 2; 
-		
-		$(loginBox).css({ 
-			'margin-top' : -popMargTop,
-			'margin-left' : -popMargLeft
-		});
-		
-		// Add the mask to body
-		$('body').append('<div id="mask"></div>');
-		$('#mask').fadeIn(300);
-		
-		return false;
-	});
-	
-	// When clicking on the button close or the mask layer the popup closed
-	$('a.close, #mask').live('click', function() { 
-	  $('#mask , .login-popup').fadeOut(300 , function() {
-		$('#mask').remove();  
-	}); 
-	return false;
-	});
-});
 </script>
   </body>
 </html>

@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <?php
 	
-$choice=$_GET["number"];
+$choice=$_POST["number"];
 echo $choice;
 // Authorisation details.
         $username = "swarnajit.adhikary@yahoo.in";

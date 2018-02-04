@@ -11,9 +11,9 @@ $host="localhost";
 $username="root";
 $password="tiger";
 $dbname="bookshare";
-$choice=$_POST["inputPhone"]; //value comes from videos.php
+$choice=$_POST["number"]; //value comes from videos.php
 $conn=  mysqli_connect($host, $username, $password, $dbname) or die("Cann not connect to database");
-$sqlquery="select user_id from people where phone='".$choice."'";
+$sqlquery="select user_name,user_id from people where phone='".$choice."'";
 $result= $conn->query($sqlquery);
  //mysqli_query($conn,$sqlquery);
 //$row = mysql_fetch_assoc($result); 
@@ -27,8 +27,10 @@ if($num==0)
     else {
         while($row = mysqli_fetch_assoc($result)) 
         {
-        $_SESSION["Name"]=$row['user_id'];
-//        echo $_SESSION["Name"];
+        $_SESSION["Name"]=$row['user_name'];
+        $_SESSION["id"]=$row['user_id'];
+        //echo $_SESSION["id"];
+        //echo $_SESSION["Name"];
         header("Location: index.php");
         //exit();
 

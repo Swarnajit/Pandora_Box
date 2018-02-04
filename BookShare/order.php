@@ -1,9 +1,10 @@
-
 <?php
 session_start();
-$choice=$_GET["hideed"]; //value comes from videos.php
-echo $choice."\n";
+//$choice=$_GET["hideed"]; //value comes from videos.php
+//$newchoice=$_SESSION["id"];
+//echo $newchoice."\n";
 include 'order_handle.php';
+//$user=$_SESSION["id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +69,7 @@ include 'order_handle.php';
             {    
           ?>
           <li class="nav-item active">
-              <a class="nav-link" href="destroy"><?php echo $_SESSION["Name"]?></a>
+              <a class="nav-link" href="destroy"><?php echo $_SESSION["Name"];?></a>
           </li>
           
           <?php
@@ -89,17 +90,19 @@ include 'order_handle.php';
         </form>
       </div>
         </nav>
+        <br>
       <div class="blog-header">
-          <?php             
-            if($num==0)
-            
-{
-echo $choice1;
-exit;
+          <?php
+          if(strlen($choice1)==6)
+          {
+               if($num==0)         
+                {
+                    echo "Dur BAl";//............ divert to 404 page not found
+                    exit;
 
-}
-else
-{
+                }
+                else
+                {
     while($row = mysqli_fetch_assoc($result)) 
     {
     ?> 
@@ -128,14 +131,28 @@ else
                
             <img class="square" src="<?php  echo $row['BookImage'];?>" alt="Generic placeholder image" width="200" height="300">         
                    </div>
-       <p><form action="order.php" method="get">
-                <input type="hidden" value="<?php echo $row['Book_ID']; ?>" name="hideed">
+            <p><form action="request_book" method="get">
+                <input type="hidden" value="<?php echo $row['Book_ID'];?>" name="hideed">
+                <?php
+            if(isset($_SESSION["Name"]))
+            {    
+          ?>
+                <input type="hidden" value="<?php echo $_SESSION["id"];?>" name="pagla">
+            <?php
+            }
+            ?>
                 <button class="btn btn-primary" type="submit" role="button">Request &raquo;</button>
             </form>     
       <?php
-    }
-}
-      ?>
+    }   
+    }    
+          }
+          else {
+              header("Location: Login.php");////............ divert to 404 page not found
+              echo 'Hacking attempt';
+          }
+              
+?>
         </div><!-- /.blog-sidebar -->
 
       </div><!-- /.row -->
