@@ -5,7 +5,19 @@ session_start();
 //echo $newchoice."\n";
 include 'order_handle.php';
 //$user=$_SESSION["id"];
-?>
+          if(strlen($choice1)==6)
+          {
+               if($num==0)         
+                {
+                    echo "Dur BAl";//............ divert to 404 page not found
+                    exit;
+
+                }
+                else
+                {
+    while($row = mysqli_fetch_assoc($result)) 
+    {
+    ?> 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,14 +29,14 @@ include 'order_handle.php';
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Blog Template for Bootstrap</title>
+    <title>About <?php  echo $row['Book_Name'];?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="CSS/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="CSS/blog.css" rel="stylesheet">
-
+    <link href="CSS/formStyle.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
@@ -68,8 +80,12 @@ include 'order_handle.php';
             if(isset($_SESSION["Name"]))
             {    
           ?>
-          <li class="nav-item active">
-              <a class="nav-link" href="destroy"><?php echo $_SESSION["Name"];?></a>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["Name"]?></a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="profile">Profile</a>
+              <a class="dropdown-item" href="destroy">Logout</a>
+            </div>
           </li>
           
           <?php
@@ -84,28 +100,28 @@ include 'order_handle.php';
           }
           ?>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <div class="nav-item">
+              <a href="#login-box" class="login-window"><img src="search-icon-png-27.png" height="30" width="30" alt="Search" title="Search"></a>
+        	</div>
       </div>
-        </nav>
+    </nav>
+	<!--Search form-------------->
+        <div id="login-box" class="login-popup">
+        <a href="#" class="close"><img src="close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+        <form method="post" class="signin" action="searchPage.php">
+                <fieldset class="textbox">
+            	<label class="username">
+                    <input id="username" name="username" value="" type="text" autocomplete="off" placeholder="Search your book in our library" onkeyup="showHint(this.value)">
+                    
+                </label>
+                
+                </fieldset>
+            <div id="livesearch"></div>
+          </form>
+		</div>
         <br>
+	<!--Search form-------------->
       <div class="blog-header">
-          <?php
-          if(strlen($choice1)==6)
-          {
-               if($num==0)         
-                {
-                    echo "Dur BAl";//............ divert to 404 page not found
-                    exit;
-
-                }
-                else
-                {
-    while($row = mysqli_fetch_assoc($result)) 
-    {
-    ?> 
         <h1 class="blog-title"><?php  echo $row['Book_Name'];?></h1>
         <p class="lead blog-description"><?php  echo $row['Author'];?></p>
       </div>
@@ -131,7 +147,7 @@ include 'order_handle.php';
                
             <img class="square" src="<?php  echo $row['BookImage'];?>" alt="Generic placeholder image" width="200" height="300">         
                    </div>
-            <p><form action="request_book" method="get">
+            <p><form action="request_book" method="post">
                 <input type="hidden" value="<?php echo $row['Book_ID'];?>" name="hideed">
                 <?php
             if(isset($_SESSION["Name"]))
@@ -170,10 +186,66 @@ include 'order_handle.php';
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="JS/jquery.min.js"><\/script>')</script>
+    <script src="JS/popper.min.js"></script>
     <script src="JS/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="JS/ie10-viewport-bug-workaround.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="JS/holder.min.js"></script>
+    <script>
+    function showHint(str) {
+    if (str.length == 0) { 
+        document.getElementById("livesearch").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("livesearch").innerHTML =this.responseText;
+                
+            }
+        };
+        xmlhttp.open("GET", "gethint.php?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('a.login-window').click(function() {
+		
+		// Getting the variable's value from a link 
+		var loginBox = $(this).attr('href');
+
+		//Fade in the Popup and add close button
+		$(loginBox).fadeIn(300);
+		
+		//Set the center alignment padding + border
+		var popMargTop = ($(loginBox).height() + 24) / 2; 
+		var popMargLeft = ($(loginBox).width() + 24) / 2; 
+		
+		$(loginBox).css({ 
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+		
+		// Add the mask to body
+		$('body').append('<div id="mask"></div>');
+		$('#mask').fadeIn(300);
+		
+		return false;
+	});
+	
+	// When clicking on the button close or the mask layer the popup closed
+	$('a.close, #mask').live('click', function() { 
+	  $('#mask , .login-popup').fadeOut(300 , function() {
+		$('#mask').remove();  
+	}); 
+	return false;
+	});
+});    
+    </script>
   </body>
 </html>
 

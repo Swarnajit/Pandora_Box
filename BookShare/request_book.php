@@ -10,12 +10,12 @@ $host="localhost";
 $username="root";
 $password="tiger";
 $dbname="bookshare";
-if(isset($_GET["hideed"]))
+if(isset($_SESSION["Name"]))
 {    
-    $choice1=$_GET["hideed"]; //coming from order.php
-    if(isset($_SESSION["Name"]))
+    $lovely=$_POST["pagla"];//....................use some filtering function
+    if(isset($_POST["hideed"]))
     {    
-        $lovely=$_GET["pagla"];
+        $choice1=$_POST["hideed"]; //coming from order.php
 //echo $choice1;
 //echo $lovely;
 $status="passed";
@@ -26,10 +26,15 @@ echo "$mydate[month]-$mydate[mday]-$mydate[year]";
 //echo $date;
 //$choice=$_GET["show"]; //value comes from videos.php
 $conn=mysqli_connect($host, $username, $password, $dbname) or die("Cann not connect to database");
-$sqlquery="insert into order_handler (book_id,user_id,status,order_date) values ('$choice1','$lovely','$status','Feb-$mydate[mday]-$mydate[year]')";
-$result= $conn->query($sqlquery);
-if($result==TRUE)
-    echo 'your order is confirmed';
+$checksql="select order_date from order_handler where book_id='".$choice1."' and user_id='".$lovely."'";
+$checkresult= $conn->query($checksql);
+$num1=mysqli_num_rows($checkresult);
+if($num1==0)//.................check if the order is given in the same month
+{
+   $sqlquery="insert into order_handler (book_id,user_id,status,order_date) values ('$choice1','$lovely','$status','Feb-$mydate[mday]-$mydate[year]')";
+    $result= $conn->query($sqlquery);
+    if($result==TRUE)
+        echo 'your order is confirmed';
  //mysqli_query($conn,$sqlquery);
 //$row = mysql_fetch_assoc($result); 
 //$num=mysqli_num_rows($result); 
@@ -41,8 +46,11 @@ if($result==TRUE)
 //}    
 }
 else
-    echo 'page not found';
+    echo 'Already Ordered';
+}
+ 
 }
 else
-    include 'SignUp.php';//............................Page Not found Error 404
+    header("Location: SignUp_Password.php");
+    //include 'SignUp.php';//............................Page Not found Error 404
 ?>
