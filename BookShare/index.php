@@ -6,7 +6,8 @@ and open the template in the editor.
 -->
 <?php
 session_start();
-include 'Database.php';
+require_once 'Database.php';
+//include 'webFrame.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,15 +16,16 @@ include 'Database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="Graphicloads-Colorful-Long-Shadow-Book.ico">
 
-    <title>BookShare- Online Library and Book rent</title>
+    <title>GetBookOnline- Online Library and Book rent</title>
 
     <!-- Bootstrap core CSS -->
     <link href="CSS/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="CSS/carousel.css" rel="stylesheet">
+    <link href="CSS/blog.css" rel="stylesheet">
     <link href="CSS/formStyle.css" rel="stylesheet">
   </head>
   <body>
@@ -32,7 +34,7 @@ include 'Database.php';
 	
 	<!--header added-->
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">BookShare</a>
+      <a class="navbar-brand" href="#">GetBookOnline</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -61,8 +63,13 @@ include 'Database.php';
             if(isset($_SESSION["Name"]))
             {    
           ?>
-          <li class="nav-item active">
-              <a class="nav-link" href="destroy"><?php echo $_SESSION["Name"]?></a>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["Name"]?></a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                  <a class="dropdown-item" href="newProfile.php">Profile</a>
+                  <a class="dropdown-item" href="settings.php">Settings</a>
+              <a class="dropdown-item" href="destroy">Logout</a>
+            </div>
           </li>
           
           <?php
@@ -76,16 +83,8 @@ include 'Database.php';
           <?php
           }
           ?>
-          <!--<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>-->
         </ul>
-          <div class="btn-sign">
+          <div class="nav-item">
               <a href="#login-box" class="login-window"><img src="search-icon-png-27.png" height="30" width="30" alt="Search" title="Search"></a>
         	</div>
       </div>
@@ -93,13 +92,15 @@ include 'Database.php';
 	<!--Search form-------------->
         <div id="login-box" class="login-popup">
         <a href="#" class="close"><img src="close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
-          <form method="post" class="signin" action="#">
+        <form method="post" class="signin" action="searchPage.php">
                 <fieldset class="textbox">
             	<label class="username">
-                <input id="username" name="username" value="" type="text" autocomplete="on" placeholder="Search your book in our library">
+                    <input id="booksearch" name="booksearch" value="" type="text" autocomplete="off" placeholder="Search your book in our library" onkeyup="showHint(this.value)">
+                    
                 </label>
                 
                 </fieldset>
+            <div id="livesearch"></div>
           </form>
 		</div>
 	<!--Search form-------------->
@@ -113,22 +114,22 @@ include 'Database.php';
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-              <img class="first-slide" src="books_grass_stack_mood_54495_1920x1080.jpg" alt="First slide">
+              <img class="first-slide" src="coconut oil coffee green clean eating living recipe.jpg" alt="First slide">
             <div class="container">
-              <div class="carousel-caption text-left">
-                <h1>Example headline.</h1>
+              <div class="carousel-caption">
+                  <h1 style="color: black">Example headline.</h1>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                <p><a class="btn btn-lg btn-primary" href="SignUp.php" role="button">Sign up today</a></p>
               </div>
             </div>
           </div>
           <div class="carousel-item">
-              <img class="second-slide" src="Twilight_carrying_stack_of_books_EG.png" alt="Second slide">
+              <img class="second-slide" src="411522.jpg" alt="Second slide">
             <div class="container">
               <div class="carousel-caption">
                 <h1>Another example headline.</h1>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                <p><a class="btn btn-lg btn-primary" href="pricing.html" role="button">Check our price</a></p>
               </div>
             </div>
           </div>
@@ -136,7 +137,7 @@ include 'Database.php';
               <img class="third-slide" src="reading_feature.jpg" alt="Third slide">
             <div class="container">
               <div class="carousel-caption text-right">
-                  <h1 style="color: black">One more for good measure.</h1>
+                  <h1>One more for good measure.</h1>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                 <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
               </div>
@@ -176,11 +177,16 @@ include 'Database.php';
 
       <!-- Marketing messaging and featurettes
       ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->     
-	<div class="container marketing">
+      <!-- Wrap the rest of the page in another container to center all the content. -->           
+      <div class="container marketing">
         <!-- Example row of columns -->
         <div class="row">
        <?php
+       $sqlquery="select * from bookinfo limit 3";
+        $result= $conn->query($sqlquery);
+ //mysqli_query($conn,$sqlquery);
+//$row = mysql_fetch_assoc($result); 
+        $num=mysqli_num_rows($result);
        if($num==0)
         {
             echo "No record";
@@ -194,7 +200,7 @@ include 'Database.php';
           <div class="col-lg-4">
               <h2><?php echo $row['Book_Name'];?></h2>
 			<img class="square" src="<?php echo $row['BookImage'];?>" alt="Generic placeholder image" width="150" height="200">
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><?php echo $row['About'];?></p>
             <p><form action="order.php" method="get">
                 <input type="hidden" value="<?php echo $row['Book_ID']; ?>" name="hideed">
                 <button class="btn btn-primary" type="submit" role="button">Request &raquo;</button>
@@ -207,11 +213,10 @@ include 'Database.php';
 ?>        
 	</div>
 </div>
-      <!-- FOOTER -->
-      <footer class="container">
-        <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-      </footer>
+<!--Footer-->
+<?php
+include 'webFrame.php';
+?>
     </main>
 
 
@@ -233,8 +238,8 @@ function showHint(str) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("livesearch").innerHTML = this.responseText;
-                document.getElementById("livesearch").style.border="1px solid #A5ACB2";
+                document.getElementById("livesearch").innerHTML =this.responseText;
+                
             }
         };
         xmlhttp.open("GET", "gethint.php?q=" + str, true);

@@ -15,7 +15,7 @@ $hint = "";
 if ($q !== "") {
     $q = strtolower($q);
     $len=strlen($q);
-    $sqlquery="select Book_Name from bookinfo where Book_Name like '%".$q."%'";
+    $sqlquery="select Book_Name,Book_ID from bookinfo where Book_Name like '%".$q."%'";
     $result= $conn->query($sqlquery);
     $num=mysqli_num_rows($result);
     if($num==0)
@@ -27,7 +27,7 @@ if ($q !== "") {
         {
             while($row= mysqli_fetch_assoc($result))
             {
-              $hint .= "<a style='color: #b3d7ff'>".$row['Book_Name']."</a><br/>";
+              $hint .= "<a href='order.php?hideed=".$row['Book_ID']."' style='color: #b3d7ff'>".$row['Book_Name']."</a><br/>";
             }
         }
 }
